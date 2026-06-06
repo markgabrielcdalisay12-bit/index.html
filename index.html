@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GAB Cafe – Exquisite Culinary Artistry</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+:root {
+    --bg-color: #fafafa;
+    --text-color: #111111;
+    --text-light: #666666;
+    --primary-color: #c5a059;
+    --primary-hover: #a38143;
+    --card-bg: #ffffff;
+    --modal-overlay: rgba(0,0,0,0.75);
+    --glass-bg: rgba(255,255,255,0.88);
+    --glass-border: rgba(197,160,89,0.18);
+    --shadow: 0 12px 40px rgba(0,0,0,0.07);
+    --input-focus: rgba(197,160,89,0.22);
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+    --transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+    --success: #2f9e58;
+    --error: #c53030;
+}
+.dark-mode {
+    --bg-color: #0b0b0b;
+    --text-color: #f5f5f5;
+    --text-light: #999999;
+    --card-bg: #141414;
+    --glass-bg: rgba(20,20,20,0.88);
+    --glass-border: rgba(255,255,255,0.08);
+    --shadow: 0 16px 50px rgba(0,0,0,0.55);
+    --input-focus: rgba(197,160,89,0.35);
+}
+*{margin:0;padding:0;box-sizing:border-box;scroll-behavior:smooth;}
+body{font-family:var(--font-body);background-color:var(--bg-color);color:var(--text-color);line-height:1.65;transition:background-color 0.5s ease,color 0.5s ease;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+h1,h2,h3,h4{font-family:var(--font-heading);letter-spacing:-0.02em;}
+ul{list-style:none;}
+a{text-decoration:none;color:inherit;}
+
+.btn-primary,.btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 32px;border-radius:4px;font-weight:500;cursor:pointer;transition:var(--transition);border:none;font-size:0.95rem;letter-spacing:0.03em;text-transform:uppercase;font-family:var(--font-body);}
+.btn-primary{background:var(--primary-color);color:#fff;}
+.btn-primary:hover{background:var(--primary-hover);transform:translateY(-2px);box-shadow:0 8px 24px rgba(197,160,89,0.28);}
+.btn-primary:disabled{opacity:0.65;cursor:not-allowed;transform:none !important;box-shadow:none !important;}
+.btn-secondary{background:transparent;border:1.5px solid var(--primary-color);color:var(--primary-color);}
+.btn-secondary:hover{background:var(--primary-color);color:#fff;transform:translateY(-2px);}
+.w-100{width:100%;}
+
+.glassmorphism{background:var(--glass-bg);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid var(--glass-border);box-shadow:var(--shadow);}
+
+.navbar{position:fixed;top:0;left:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:16px 6%;z-index:1000;border-bottom:1px solid var(--glass-border);}
+.logo{font-family:var(--font-heading);font-size:1.85rem;font-weight:700;font-style:italic;letter-spacing:-0.01em;}
+.logo span{color:var(--primary-color);}
+.nav-links{display:flex;align-items:center;gap:38px;}
+.nav-links a{font-size:0.92rem;font-weight:400;transition:color 0.25s;}
+.nav-links a:hover{color:var(--primary-color);}
+.nav-actions{display:flex;align-items:center;gap:14px;}
+.theme-btn{background:none;border:none;font-size:1.15rem;color:var(--text-color);cursor:pointer;transition:transform 0.3s ease;padding:6px;}
+.theme-btn:hover{transform:rotate(18deg) scale(1.12);}
+
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:0 6%;background:linear-gradient(rgba(0,0,0,0.54),rgba(0,0,0,0.54)),url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;color:#fff;}
+.hero-content{max-width:880px;}
+.hero-badge{display:inline-block;font-size:0.82rem;text-transform:uppercase;letter-spacing:0.22em;color:var(--primary-color);margin-bottom:20px;font-weight:600;}
+.hero h1{font-size:4rem;line-height:1.14;margin-bottom:24px;font-weight:400;}
+.hero p{font-size:1.2rem;font-weight:300;margin:0 auto 40px;max-width:660px;color:#e5e5e5;}
+.hero-buttons{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
+
+.menu-section{padding:120px 6%;max-width:1400px;margin:0 auto;}
+.section-header{text-align:center;margin-bottom:58px;}
+.section-header h2{font-size:2.8rem;font-weight:400;color:var(--primary-color);margin-bottom:14px;}
+.section-header p{color:var(--text-light);font-size:1.02rem;max-width:580px;margin:0 auto;}
+.menu-controls{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:48px;gap:22px;}
+.search-bar{position:relative;width:100%;max-width:350px;}
+.search-icon{position:absolute;left:17px;top:50%;transform:translateY(-50%);color:var(--text-light);pointer-events:none;}
+.search-bar input{width:100%;padding:13px 13px 13px 48px;border-radius:4px;border:1px solid var(--glass-border);background:var(--card-bg);color:var(--text-color);outline:none;transition:var(--transition);font-size:0.93rem;font-family:var(--font-body);}
+.search-bar input:focus{border-color:var(--primary-color);box-shadow:0 0 0 4px var(--input-focus);}
+.category-filters{display:flex;flex-wrap:wrap;gap:10px;}
+.filter-btn{padding:9px 22px;border-radius:4px;border:1px solid var(--glass-border);background:var(--card-bg);color:var(--text-color);font-weight:500;font-size:0.88rem;cursor:pointer;transition:var(--transition);font-family:var(--font-body);}
+.filter-btn.active,.filter-btn:hover{background:var(--primary-color);color:#fff;border-color:var(--primary-color);}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:32px;}
+.menu-card{background:var(--card-bg);border-radius:6px;overflow:hidden;box-shadow:var(--shadow);cursor:pointer;transition:var(--transition);}
+.menu-card:hover{transform:translateY(-7px);box-shadow:0 22px 44px rgba(0,0,0,0.1);}
+.card-img-wrap{overflow:hidden;height:230px;}
+.menu-card img{width:100%;height:230px;object-fit:cover;transition:transform 0.6s cubic-bezier(0.16,1,0.3,1);display:block;}
+.menu-card:hover img{transform:scale(1.06);}
+.card-content{padding:24px;}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:11px;gap:14px;}
+.card-header h3{font-size:1.28rem;font-weight:400;line-height:1.25;}
+.card-price{color:var(--primary-color);font-weight:600;font-size:1.12rem;white-space:nowrap;}
+.card-desc{color:var(--text-light);font-size:0.92rem;line-height:1.55;}
+.no-results{grid-column:1/-1;text-align:center;padding:70px 20px;color:var(--text-light);font-size:1.05rem;}
+.no-results i{font-size:2.2rem;color:var(--primary-color);display:block;margin-bottom:14px;}
+
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:var(--modal-overlay);display:flex;align-items:center;justify-content:center;z-index:2000;padding:16px;opacity:0;visibility:hidden;transition:opacity 0.4s ease,visibility 0.4s ease;}
+.modal.active{opacity:1;visibility:visible;}
+.modal-content{position:relative;width:100%;max-width:880px;border-radius:8px;display:flex;overflow:hidden;transform:scale(0.9) translateY(20px);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);max-height:88vh;border:1px solid var(--glass-border);}
+.modal.active .modal-content{transform:scale(1) translateY(0);}
+.close-modal{position:absolute;top:14px;right:14px;background:var(--card-bg);border:none;font-size:1.35rem;color:var(--text-color);cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:10;box-shadow:var(--shadow);line-height:1;transition:var(--transition);}
+.close-modal:hover{background:var(--primary-color);color:#fff;}
+.modal-body{display:flex;width:100%;overflow-y:auto;}
+.modal-image{flex:1.1;min-width:340px;}
+.modal-image img{width:100%;height:100%;object-fit:cover;min-height:280px;display:block;}
+.modal-details{flex:1;min-width:300px;padding:40px;overflow-y:auto;}
+.modal-details h2{color:var(--primary-color);font-size:1.9rem;font-weight:400;margin-bottom:7px;line-height:1.15;}
+.modal-details .price{font-size:1.35rem;font-weight:600;margin-bottom:18px;}
+.modal-details .desc{color:var(--text-light);margin-bottom:22px;font-size:0.97rem;line-height:1.6;}
+.ingredients h3,.nutrition-box h3{font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;border-bottom:1px solid var(--glass-border);padding-bottom:6px;font-family:var(--font-body);}
+.ingredients p{color:var(--text-light);font-size:0.92rem;margin-bottom:22px;line-height:1.55;}
+.nutrition-box .serving{font-size:0.87rem;color:var(--text-light);margin-bottom:11px;}
+.nutrition-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;background:var(--bg-color);padding:14px;border-radius:6px;text-align:center;}
+.nut-item span{display:block;font-size:0.68rem;color:var(--text-light);text-transform:uppercase;margin-bottom:3px;letter-spacing:0.04em;}
+.nut-item strong{font-size:1rem;font-weight:700;}
+
+.booking-section{padding:120px 6%;background:var(--card-bg);}
+.booking-container{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr 1.15fr;gap:75px;align-items:start;}
+.sub-heading{font-size:0.82rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--primary-color);font-weight:600;margin-bottom:10px;display:block;}
+.booking-text h2{font-size:3rem;font-weight:400;line-height:1.14;margin-bottom:18px;}
+.booking-text p{color:var(--text-light);font-size:1.02rem;margin-bottom:32px;line-height:1.7;}
+.contact-quick-info{display:flex;flex-direction:column;gap:14px;}
+.info-item{display:flex;align-items:center;gap:14px;font-size:0.97rem;}
+.info-item i{color:var(--primary-color);width:20px;text-align:center;}
+
+.booking-form{padding:40px;border-radius:8px;}
+.form-group{display:flex;gap:18px;margin-bottom:18px;}
+.input-wrapper{position:relative;width:100%;}
+.input-icon{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--text-light);font-size:0.9rem;pointer-events:none;}
+.booking-form input,.booking-form textarea{width:100%;padding:14px 14px 14px 43px;border:1px solid var(--glass-border);border-radius:4px;background:var(--bg-color);color:var(--text-color);font-family:var(--font-body);font-size:0.93rem;outline:none;transition:var(--transition);}
+.booking-form input:focus,.booking-form textarea:focus{border-color:var(--primary-color);box-shadow:0 0 0 4px var(--input-focus);}
+.booking-form input[type="date"],.booking-form input[type="time"]{padding-left:15px;}
+.text-area-wrapper{display:flex;margin-bottom:18px;}
+.text-area-icon{top:18px !important;transform:none !important;}
+.booking-form textarea{padding-left:43px;resize:none;line-height:1.55;}
+
+/* ── CONFIRMATION CARD ── */
+.confirmation-card{
+    display:none;padding:28px;border-radius:8px;
+    border-left:4px solid var(--primary-color);
+    background:var(--bg-color);margin-top:18px;
+    animation:slideDown 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+.confirmation-card.visible{display:block;}
+@keyframes slideDown{from{opacity:0;transform:translateY(-12px);}to{opacity:1;transform:translateY(0);}}
+.conf-title{font-family:var(--font-heading);font-size:1.25rem;color:var(--primary-color);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.conf-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 20px;}
+.conf-item{font-size:0.9rem;}
+.conf-item span{display:block;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-light);margin-bottom:3px;}
+.conf-item strong{font-weight:600;}
+.conf-note{margin-top:14px;font-size:0.87rem;color:var(--text-light);line-height:1.55;border-top:1px solid var(--glass-border);padding-top:12px;}
+.conf-email-badge{
+    margin-top:12px;padding:10px 14px;border-radius:4px;
+    background:rgba(47,158,88,0.08);border:1px solid rgba(47,158,88,0.22);
+    color:var(--success);font-size:0.86rem;display:flex;align-items:center;gap:9px;
+}
+
+#form-status{margin-top:14px;padding:13px 17px;border-radius:4px;font-size:0.92rem;font-weight:500;text-align:center;display:none;}
+#form-status.success{display:block;background:rgba(47,158,88,0.1);color:var(--success);border:1px solid rgba(47,158,88,0.28);}
+#form-status.error{display:block;background:rgba(197,48,48,0.08);color:var(--error);border:1px solid rgba(197,48,48,0.22);}
+
+.fab-container{position:fixed;bottom:28px;right:28px;z-index:1000;}
+.fab-btn{width:58px;height:58px;border-radius:50%;background:var(--primary-color);color:#fff;border:none;font-size:1.35rem;cursor:pointer;box-shadow:0 8px 28px rgba(197,160,89,0.38);transition:var(--transition);display:flex;align-items:center;justify-content:center;}
+.fab-btn:hover{transform:scale(1.08) rotate(-10deg);}
+.mini-list{position:absolute;bottom:72px;right:0;width:215px;padding:18px;border-radius:8px;opacity:0;visibility:hidden;transform:translateY(18px);transition:var(--transition);}
+.mini-list.active{opacity:1;visibility:visible;transform:translateY(0);}
+.mini-list h4{font-size:0.82rem;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:12px;border-bottom:1px solid var(--glass-border);padding-bottom:6px;}
+.mini-list ul li{margin-bottom:9px;}
+.mini-list ul li a{display:flex;align-items:center;gap:11px;font-size:0.92rem;transition:color 0.2s;}
+.mini-list ul li a i{color:var(--primary-color);width:15px;}
+.mini-list ul li a:hover{color:var(--primary-color);}
+
+.footer{padding:56px 6% 28px;background:var(--bg-color);border-top:1px solid var(--glass-border);}
+.footer-content{display:flex;justify-content:space-between;flex-wrap:wrap;gap:38px;max-width:1160px;margin:0 auto 38px;}
+.footer h3{font-size:1.7rem;font-style:italic;margin-bottom:13px;}
+.footer h4{text-transform:uppercase;font-size:0.85rem;letter-spacing:0.1em;color:var(--primary-color);margin-bottom:13px;}
+.footer p{color:var(--text-light);font-size:0.92rem;line-height:1.7;}
+.footer-copyright{border-top:1px solid var(--glass-border);padding-top:22px;font-size:0.82rem;color:var(--text-light);text-align:center;}
+
+.reveal{opacity:0;transform:translateY(30px);transition:all 0.8s cubic-bezier(0.16,1,0.3,1);}
+.reveal.active{opacity:1;transform:translateY(0);}
+
+@media(max-width:1024px){.booking-container{grid-template-columns:1fr;gap:48px;}.hero h1{font-size:3.2rem;}.modal-content{max-width:700px;}}
+@media(max-width:768px){.nav-links{display:none;}.form-group{flex-direction:column;gap:14px;}.modal-body{flex-direction:column;}.modal-image{min-width:100%;height:220px;flex:none;}.modal-image img{min-height:220px;height:220px;}.modal-details{min-width:100%;padding:24px 18px;}.nutrition-grid{grid-template-columns:repeat(2,1fr);}.hero h1{font-size:2.4rem;}.booking-form{padding:24px 18px;}.conf-grid{grid-template-columns:1fr;}}
+    </style>
+</head>
+<body>
+
+<nav class="navbar glassmorphism">
+    <div class="logo">GAB <span>Cafe</span></div>
+    <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#booking" class="btn-primary" style="padding:10px 22px;">Book a Table</a></li>
+    </ul>
+    <div class="nav-actions">
+        <button id="theme-toggle" aria-label="Toggle dark mode" class="theme-btn">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+</nav>
+
+<header id="home" class="hero">
+    <div class="hero-content reveal">
+        <span class="hero-badge">Exquisite Culinary Artistry</span>
+        <h1>A Modern Symphony<br>of Taste & Luxury</h1>
+        <p>Crafted from freshly sourced, sustainable ingredients. Tap any dish to explore full recipes and nutritional profiles.</p>
+        <div class="hero-buttons">
+            <a href="#menu" class="btn-primary">Explore Our Menu</a>
+            <a href="#booking" class="btn-secondary">Reserve a Table</a>
+        </div>
+    </div>
+</header>
+
+<section id="menu" class="menu-section">
+    <div class="section-header reveal">
+        <h2>Our Interactive Menu</h2>
+        <p>Filter or search our premium offerings. Tap any dish to view ingredients and full nutritional profiles.</p>
+    </div>
+    <div class="menu-controls reveal">
+        <div class="search-bar">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="menu-search" placeholder="Search dishes, ingredients...">
+        </div>
+        <div class="category-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="appetizers">Appetizers</button>
+            <button class="filter-btn" data-filter="main">Main Courses</button>
+            <button class="filter-btn" data-filter="desserts">Desserts</button>
+        </div>
+    </div>
+    <div class="menu-grid" id="menu-grid"></div>
+</section>
+
+<section id="booking" class="booking-section">
+    <div class="booking-container reveal">
+        <div class="booking-text">
+            <span class="sub-heading">Reserve Your Experience</span>
+            <h2>Secure Your Table at GAB Cafe</h2>
+            <p>Fill in your details and we'll log your reservation instantly to our system — and send a confirmation email directly to you and our team.</p>
+            <div class="contact-quick-info">
+                <div class="info-item"><i class="fas fa-envelope"></i><span>markgabrielcdalisay12@gmail.com</span></div>
+                <div class="info-item"><i class="fas fa-phone-alt"></i><span>+1 (555) 839-2049</span></div>
+                <div class="info-item"><i class="fas fa-map-marker-alt"></i><span>712 Luxury Promenade, Metro District</span></div>
+            </div>
+        </div>
+
+        <div>
+            <form id="booking-form" class="booking-form glassmorphism">
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" name="customer_name" id="f-name" required placeholder="Full Name">
+                    </div>
+                    <div class="input-wrapper">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" name="customer_email" id="f-email" required placeholder="Email Address">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <i class="fas fa-phone input-icon"></i>
+                        <input type="tel" name="customer_phone" id="f-phone" required placeholder="Phone Number">
+                    </div>
+                    <div class="input-wrapper">
+                        <i class="fas fa-users input-icon"></i>
+                        <input type="number" name="guests_count" id="f-guests" min="1" max="30" required placeholder="Guests">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <input type="date" name="reservation_date" id="f-date" required aria-label="Date">
+                    </div>
+                    <div class="input-wrapper">
+                        <input type="time" name="reservation_time" id="f-time" required aria-label="Time">
+                    </div>
+                </div>
+                <div class="input-wrapper text-area-wrapper">
+                    <i class="fas fa-comment-alt input-icon text-area-icon"></i>
+                    <textarea name="special_requests" id="f-message" rows="4" placeholder="Special requests — allergies, occasions, dietary needs..."></textarea>
+                </div>
+
+                <button type="submit" id="submit-btn" class="btn-primary w-100" style="margin-top:4px;">
+                    Confirm Reservation &nbsp;<i class="fas fa-paper-plane"></i>
+                </button>
+                <div id="form-status"></div>
+            </form>
+
+            <div class="confirmation-card glassmorphism" id="conf-card">
+                <div class="conf-title">
+                    <i class="fas fa-check-circle" style="color:var(--primary-color);"></i>
+                    Booking Confirmed
+                </div>
+                <div class="conf-grid">
+                    <div class="conf-item"><span>Name</span><strong id="conf-name">—</strong></div>
+                    <div class="conf-item"><span>Email</span><strong id="conf-email" style="word-break:break-all;">—</strong></div>
+                    <div class="conf-item"><span>Date</span><strong id="conf-date">—</strong></div>
+                    <div class="conf-item"><span>Time</span><strong id="conf-time">—</strong></div>
+                    <div class="conf-item"><span>Guests</span><strong id="conf-guests">—</strong></div>
+                    <div class="conf-item"><span>Phone</span><strong id="conf-phone">—</strong></div>
+                </div>
+                <p class="conf-note" id="conf-requests"></p>
+                <div class="conf-email-badge">
+                    <i class="fas fa-envelope-open-text"></i>
+                    <span>Confirmation email sent to <strong id="conf-email-badge-addr"></strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-content">
+        <div>
+            <h3>GAB <span style="color:var(--primary-color)">Cafe</span></h3>
+            <p>712 Luxury Promenade, Metro District</p>
+        </div>
+        <div>
+            <h4>Hours of Operation</h4>
+            <p>Monday – Thursday: 11:00 AM – 10:00 PM</p>
+            <p>Friday – Saturday: 11:00 AM – 11:00 PM</p>
+            <p>Sunday Brunch: 10:00 AM – 9:00 PM</p>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <p>&copy; 2026 GAB Cafe. All Rights Reserved.</p>
+    </div>
+</footer>
+
+<div id="food-modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-content glassmorphism">
+        <button class="close-modal" aria-label="Close">&times;</button>
+        <div class="modal-body">
+            <div class="modal-image"><img id="modal-img" src="" alt="Dish"></div>
+            <div class="modal-details">
+                <h2 id="modal-title"></h2>
+                <p class="price" id="modal-price"></p>
+                <p id="modal-desc" class="desc"></p>
+                <div class="ingredients">
+                    <h3>Ingredients</h3>
+                    <p id="modal-ingredients"></p>
+                </div>
+                <div class="nutrition-box">
+                    <h3>Nutritional Facts</h3>
+                    <p class="serving">Serving: <span id="modal-serving"></span></p>
+                    <div class="nutrition-grid">
+                        <div class="nut-item"><span>Calories</span><strong id="modal-cal"></strong></div>
+                        <div class="nut-item"><span>Protein</span><strong id="modal-pro"></strong></div>
+                        <div class="nut-item"><span>Carbs</span><strong id="modal-carb"></strong></div>
+                        <div class="nut-item"><span>Fat</span><strong id="modal-fat"></strong></div>
+                        <div class="nut-item"><span>Fiber</span><strong id="modal-fib"></strong></div>
+                        <div class="nut-item"><span>Sodium</span><strong id="modal-sod"></strong></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fab-container">
+    <button id="fab-btn" class="fab-btn" aria-label="Quick links"><i class="fas fa-book-open"></i></button>
+    <div id="mini-list" class="mini-list glassmorphism">
+        <h4>Quick Links</h4>
+        <ul>
+            <li><a href="#menu"><i class="fas fa-utensils"></i> Our Menu</a></li>
+            <li><a href="#booking"><i class="fas fa-bookmark"></i> Book a Table</a></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+const MENU = [
+    {id:1,category:'appetizers',name:'Burrata & Heirloom Tomato',price:'₱520',desc:'Creamy fresh burrata over a bed of heirloom tomatoes, finished with aged balsamic and fragrant basil.',image:'https://images.unsplash.com/photo-1629115916087-7ea0a4c1e6a3?auto=format&fit=crop&w=800&q=80',ingredients:'Fresh burrata, heirloom tomatoes, aged balsamic glaze, fresh basil, extra virgin olive oil, sea salt, cracked black pepper.',serving:'1 plate (280g)',calories:'320 kcal',protein:'14g',carbs:'12g',fat:'24g',fiber:'2g',sodium:'380mg'},
+    {id:2,category:'appetizers',name:'Seared Scallop Trio',price:'₱680',desc:'Pan-seared jumbo scallops on a cauliflower purée with crispy capers and lemon beurre blanc.',image:'https://images.unsplash.com/photo-1519984388953-d2406bc725e1?auto=format&fit=crop&w=800&q=80',ingredients:'Jumbo scallops, cauliflower, capers, butter, lemon, white wine, shallots, fresh thyme.',serving:'3 scallops (210g)',calories:'280 kcal',protein:'22g',carbs:'10g',fat:'16g',fiber:'1g',sodium:'490mg'},
+    {id:3,category:'appetizers',name:'Foie Gras Torchon',price:'₱780',desc:'Silky duck foie gras with fig compote, toasted brioche soldiers, and micro herb salad.',image:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80',ingredients:'Duck foie gras, fresh figs, brown sugar, brioche, micro herbs, pink peppercorns, fleur de sel.',serving:'1 serving (130g)',calories:'410 kcal',protein:'11g',carbs:'24g',fat:'30g',fiber:'1g',sodium:'420mg'},
+    {id:4,category:'main',name:'Wagyu Beef Tenderloin',price:'₱1,950',desc:'A5 Wagyu sous-vide to perfection, plated with truffle mashed potato and red wine jus.',image:'https://images.unsplash.com/photo-1558030006-450675393462?auto=format&fit=crop&w=800&q=80',ingredients:'A5 Wagyu beef, Yukon gold potatoes, black truffle, butter, cream, red wine, veal stock, rosemary.',serving:'1 portion (380g)',calories:'720 kcal',protein:'52g',carbs:'28g',fat:'44g',fiber:'3g',sodium:'610mg'},
+    {id:5,category:'main',name:'Pan-Roasted Chilean Sea Bass',price:'₱1,480',desc:'Crispy-skinned sea bass over saffron risotto with broccolini and a citrus-herb emulsion.',image:'https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&w=800&q=80',ingredients:'Chilean sea bass, Arborio rice, saffron, white wine, Parmesan, broccolini, lemon, dill, shallots.',serving:'1 fillet + risotto (420g)',calories:'580 kcal',protein:'44g',carbs:'42g',fat:'22g',fiber:'4g',sodium:'540mg'},
+    {id:6,category:'main',name:'Wild Mushroom Risotto',price:'₱980',desc:'Slow-stirred Arborio with a medley of wild mushrooms, aged Parmesan, and white truffle oil.',image:'https://images.unsplash.com/photo-1476124369491-e7addf5db371?auto=format&fit=crop&w=800&q=80',ingredients:'Arborio rice, porcini, shiitake, cremini mushrooms, Parmesan, white truffle oil, white wine, thyme.',serving:'1 bowl (380g)',calories:'480 kcal',protein:'16g',carbs:'58g',fat:'20g',fiber:'5g',sodium:'460mg'},
+    {id:7,category:'desserts',name:'Valrhona Chocolate Fondant',price:'₱460',desc:'Warm molten cake with flowing 70% Valrhona centre, served alongside vanilla bean ice cream.',image:'https://images.unsplash.com/photo-1617305855058-65ad971e2e80?auto=format&fit=crop&w=800&q=80',ingredients:'Valrhona 70% dark chocolate, butter, eggs, caster sugar, flour, vanilla ice cream.',serving:'1 cake + scoop (180g)',calories:'540 kcal',protein:'9g',carbs:'58g',fat:'30g',fiber:'4g',sodium:'160mg'},
+    {id:8,category:'desserts',name:'Yuzu Crème Brûlée',price:'₱380',desc:'Classic French crème brûlée elevated with yuzu citrus and a perfectly caramelised sugar crust.',image:'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=80',ingredients:'Heavy cream, egg yolks, caster sugar, yuzu zest, vanilla pod.',serving:'1 ramekin (160g)',calories:'380 kcal',protein:'6g',carbs:'32g',fat:'26g',fiber:'0g',sodium:'80mg'}
+];
+
+/* ── UPDATED DEPLOYMENT URL ── */
+const GAS_URL = "https://script.google.com/macros/s/AKfycbwSV4sgJ3Ke5FuuaFtuamnSVaPWJotpOUctzrfk5f1E5jmTj8JTZu_l1DfUcz8bCaCL/exec";
+
+function formatDate(dateStr) {
+    if (!dateStr) return '—';
+    const d = new Date(dateStr + 'T00:00:00');
+    return d.toLocaleDateString('en-PH', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+}
+function formatTime(timeStr) {
+    if (!timeStr) return '—';
+    const [h, m] = timeStr.split(':');
+    const hr = parseInt(h, 10);
+    const ampm = hr >= 12 ? 'PM' : 'AM';
+    const hr12 = hr % 12 || 12;
+    return `${hr12}:${m} ${ampm}`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    /* ── THEME ── */
+    const themeBtn  = document.getElementById('theme-toggle');
+    const themeIcon = themeBtn.querySelector('i');
+    if (localStorage.getItem('gab-theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeIcon.classList.replace('fa-moon', 'fa-sun');
+    }
+    themeBtn.addEventListener('click', () => {
+        const dark = document.body.classList.toggle('dark-mode');
+        themeIcon.className = dark ? 'fas fa-sun' : 'fas fa-moon';
+        localStorage.setItem('gab-theme', dark ? 'dark' : 'light');
+    });
+
+    /* ── SCROLL REVEAL ── */
+    const revealObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('active'); revealObs.unobserve(e.target); }
+        });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    /* ── RENDER MENU ── */
+    const grid = document.getElementById('menu-grid');
+    function renderMenu(items) {
+        grid.innerHTML = '';
+        if (!items.length) {
+            grid.innerHTML = '<div class="no-results"><i class="fas fa-search"></i>No dishes found. Try a different search or filter.</div>';
+            return;
+        }
+        items.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'menu-card reveal';
+            card.innerHTML = `
+                <div class="card-img-wrap"><img src="${item.image}" alt="${item.name}" loading="lazy"></div>
+                <div class="card-content">
+                    <div class="card-header"><h3>${item.name}</h3><span class="card-price">${item.price}</span></div>
+                    <p class="card-desc">${item.desc}</p>
+                </div>`;
+            card.addEventListener('click', () => openModal(item));
+            grid.appendChild(card);
+            revealObs.observe(card);
+        });
+    }
+    renderMenu(MENU);
+
+    /* ── FILTER + SEARCH ── */
+    let activeFilter = 'all', searchVal = '';
+    function applyFilters() {
+        let list = MENU;
+        if (activeFilter !== 'all') list = list.filter(i => i.category === activeFilter);
+        if (searchVal.trim()) {
+            const q = searchVal.toLowerCase();
+            list = list.filter(i =>
+                i.name.toLowerCase().includes(q) ||
+                i.desc.toLowerCase().includes(q) ||
+                i.ingredients.toLowerCase().includes(q)
+            );
+        }
+        renderMenu(list);
+    }
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeFilter = btn.dataset.filter;
+            applyFilters();
+        });
+    });
+    document.getElementById('menu-search').addEventListener('input', e => {
+        searchVal = e.target.value;
+        applyFilters();
+    });
+
+    /* ── MODAL ── */
+    const modal    = document.getElementById('food-modal');
+    const closeBtn = modal.querySelector('.close-modal');
+    function openModal(item) {
+        document.getElementById('modal-img').src              = item.image;
+        document.getElementById('modal-img').alt              = item.name;
+        document.getElementById('modal-title').textContent    = item.name;
+        document.getElementById('modal-price').textContent    = item.price;
+        document.getElementById('modal-desc').textContent     = item.desc;
+        document.getElementById('modal-ingredients').textContent = item.ingredients;
+        document.getElementById('modal-serving').textContent  = item.serving;
+        document.getElementById('modal-cal').textContent      = item.calories;
+        document.getElementById('modal-pro').textContent      = item.protein;
+        document.getElementById('modal-carb').textContent     = item.carbs;
+        document.getElementById('modal-fat').textContent      = item.fat;
+        document.getElementById('modal-fib').textContent      = item.fiber;
+        document.getElementById('modal-sod').textContent      = item.sodium;
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+    }
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+    /* ── BOOKING FORM ── */
+    const form      = document.getElementById('booking-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const status    = document.getElementById('form-status');
+    const confCard  = document.getElementById('conf-card');
+
+    function showStatus(msg, type) {
+        status.textContent = msg;
+        status.className = type;
+        setTimeout(() => { status.className = ''; status.style.display = 'none'; }, 7000);
+    }
+
+    function populateConfCard(data) {
+        document.getElementById('conf-name').textContent    = data.customer_name  || '—';
+        document.getElementById('conf-email').textContent   = data.customer_email || '—';
+        document.getElementById('conf-date').textContent    = formatDate(data.reservation_date);
+        document.getElementById('conf-time').textContent    = formatTime(data.reservation_time);
+        document.getElementById('conf-guests').textContent  = data.guests_count
+            ? data.guests_count + (data.guests_count == 1 ? ' person' : ' people') : '—';
+        document.getElementById('conf-phone').textContent   = data.customer_phone || '—';
+
+        const note = document.getElementById('conf-requests');
+        note.textContent = data.special_requests
+            ? '📋 Special requests noted: ' + data.special_requests
+            : '✉️ No special requests. We look forward to welcoming you!';
+
+        document.getElementById('conf-email-badge-addr').textContent = data.customer_email || '—';
+
+        confCard.classList.add('visible');
+        confCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const data = {
+            customer_name:    document.getElementById('f-name').value.trim(),
+            customer_email:   document.getElementById('f-email').value.trim(),
+            customer_phone:   document.getElementById('f-phone').value.trim(),
+            guests_count:     document.getElementById('f-guests').value.trim(),
+            reservation_date: document.getElementById('f-date').value,
+            reservation_time: document.getElementById('f-time').value,
+            special_requests: document.getElementById('f-message').value.trim()
+        };
+
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> &nbsp;Sending...';
+        status.className = '';
+        status.style.display = 'none';
+        confCard.classList.remove('visible');
+
+        const formData = new FormData();
+        Object.entries(data).forEach(([k, v]) => formData.append(k, v));
+
+        fetch(GAS_URL, { method: 'POST', body: formData, mode: 'no-cors' })
+            .then(() => {
+                showStatus('✓ Reservation received! A confirmation email has been sent to you.', 'success');
+                populateConfCard(data);
+                form.reset();
+            })
+            .catch(err => {
+                console.error('Submission error:', err);
+                showStatus('✗ Network error. Please call us directly or try again.', 'error');
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = 'Confirm Reservation &nbsp;<i class="fas fa-paper-plane"></i>';
+            });
+    });
+
+    /* ── FAB ── */
+    const fabBtn   = document.getElementById('fab-btn');
+    const miniList = document.getElementById('mini-list');
+    fabBtn.addEventListener('click', e => { e.stopPropagation(); miniList.classList.toggle('active'); });
+    document.addEventListener('click', () => miniList.classList.remove('active'));
+    miniList.addEventListener('click', e => e.stopPropagation());
+});
+</script>
+</body>
+</html>
